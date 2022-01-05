@@ -34,13 +34,21 @@ func NewClient(ctx context.Context, apiKey string, opts ...Option) (*Client, err
 		client.http = &http.Client{}
 	}
 	if client.apiConfig == nil {
-		apiConfig, err := client.APIConfiguration(ctx)
+		apiConfig, err := client.GetAPIConfiguration(ctx)
 		if err != nil {
 			return nil, fmt.Errorf("newClient: %w", err)
 		}
 		client.apiConfig = apiConfig
 	}
 	return client, nil
+}
+
+// APIConfiguration gets the cached The Movie DB API configuration.
+func (client *Client) APIConfiguration() APIConfiguration {
+	if client.apiConfig == nil {
+		return APIConfiguration{}
+	}
+	return *client.apiConfig
 }
 
 // WithLanguage sets the language parameter on all requests that supports it.
