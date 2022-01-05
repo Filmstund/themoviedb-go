@@ -15,7 +15,6 @@ type Client struct {
 	baseURL   string
 	http      *http.Client
 	apiKey    string
-	language  string
 	apiConfig *APIConfiguration
 }
 
@@ -51,18 +50,12 @@ func (client *Client) APIConfiguration() APIConfiguration {
 	return *client.apiConfig
 }
 
-// WithLanguage sets the language parameter on all requests that supports it.
-// Example: 'en-us'.
-func WithLanguage(lang string) Option {
-	return func(client *Client) *Client {
-		client.language = lang
-		return client
-	}
-}
-
 // WithTimeout sets the HTTP request timeout for all requests. A zero timeout means no timeout.
 func WithTimeout(timeout time.Duration) Option {
 	return func(client *Client) *Client {
+		if client.http == nil {
+			client.http = &http.Client{}
+		}
 		client.http.Timeout = timeout
 		return client
 	}
