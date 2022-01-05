@@ -1,0 +1,25 @@
+---
+linters:
+  enable-all: true
+  disable:
+    - "scopelint" # deprecated
+    - "interfacer" # deprecated
+    - "golint" # deprecated
+    - "maligned" # deprecated
+    # checks the struct tag name case. We cannot change this due to tmdb API.
+    - "tagliatelle"
+    - "wsl"  # disable enforcement of whitespace
+    - "nlreturn"  # removes requirement of whitespace before return
+    - "paralleltest"  # unwanted
+    - "exhaustivestruct"  # unwanted
+
+issues:
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - lll

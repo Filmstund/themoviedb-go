@@ -21,26 +21,26 @@ type Client struct {
 
 // NewClient constructs a new The Movie DB client.
 func NewClient(ctx context.Context, apiKey string, opts ...Option) (*Client, error) {
-	c := &Client{
+	client := &Client{
 		apiKey: apiKey,
 	}
 	for _, opt := range opts {
-		c = opt(c)
+		client = opt(client)
 	}
-	if c.baseURL == "" {
-		c.baseURL = theMovieDBAPIBaseURL
+	if client.baseURL == "" {
+		client.baseURL = theMovieDBAPIBaseURL
 	}
-	if c.http == nil {
-		c.http = &http.Client{}
+	if client.http == nil {
+		client.http = &http.Client{}
 	}
-	if c.apiConfig == nil {
-		apiConfig, err := c.APIConfiguration(ctx)
+	if client.apiConfig == nil {
+		apiConfig, err := client.APIConfiguration(ctx)
 		if err != nil {
 			return nil, fmt.Errorf("newClient: %w", err)
 		}
-		c.apiConfig = apiConfig
+		client.apiConfig = apiConfig
 	}
-	return c, nil
+	return client, nil
 }
 
 // WithLanguage sets the language parameter on all requests that supports it.
