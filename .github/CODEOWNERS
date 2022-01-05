@@ -1,0 +1,19 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+* @Filmstund/backend @Filmstund/frontend
+
+# Frontend
+/web/ @Filmstund/frontend
+
+# Backend
+Makefile @Filmstund/backend
+go.mod @Filmstund/backend
+go.sum @Filmstund/backend
+**/*.go @Filmstund/backend
+internal @Filmstund/backend
+cmd @Filmstund/backend
+filmstaden @Filmstund/backend
+configs @Filmstund/backend
+
+# Both
+api @Filmstund/backend @Filmstund/frontend
