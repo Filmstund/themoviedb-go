@@ -10,7 +10,7 @@ import (
 type MovieSearchResult struct {
 	Page    int `json:"page"`
 	Results []struct {
-		ID               int     `json:"id"`
+		ID               int64   `json:"id"`
 		Adult            bool    `json:"adult"`
 		BackdropPath     *string `json:"backdrop_path"`
 		GenreIds         []int   `json:"genre_ids"`
