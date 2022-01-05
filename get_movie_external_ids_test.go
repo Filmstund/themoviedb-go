@@ -21,7 +21,7 @@ func TestClient_MovieExternalIDs(t *testing.T) {
 
 	client, err := themoviedb.NewClient(
 		context.Background(),
-		"47dd57b1d0383ef68392322a04f263a0",
+		"fake-api-key",
 		themoviedb.WithAPIConfiguration(themoviedb.APIConfiguration{}),
 		themoviedb.WithBaseURL(srv.URL),
 		themoviedb.WithClient(srv.Client()),
