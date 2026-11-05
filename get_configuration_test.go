@@ -1,7 +1,6 @@
 package themoviedb_test
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -13,22 +12,22 @@ const configResponse = `{"images":{"base_url":"http://image.tmdb.org/t/p/","secu
 
 func TestClient_APIConfiguration(t *testing.T) {
 	configCalled := false
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		configCalled = true
 		if _, err := w.Write([]byte(configResponse)); err != nil {
-			t.Fatalf("failed to write response: %b", err)
+			t.Errorf("failed to write response: %v", err)
 		}
 	}))
 	defer srv.Close()
 
 	_, err := themoviedb.NewClient(
-		context.Background(),
+		t.Context(),
 		"fake-key",
 		themoviedb.WithClient(srv.Client()),
 		themoviedb.WithBaseURL(srv.URL),
 	)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	if configCalled == false {
 		t.Errorf("configuration endpoint not called")
@@ -37,23 +36,23 @@ func TestClient_APIConfiguration(t *testing.T) {
 
 func TestClient_APIConfiguration_provided(t *testing.T) {
 	configCalled := false
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		configCalled = true
 		if _, err := w.Write([]byte(configResponse)); err != nil {
-			t.Fatalf("failed to write response: %b", err)
+			t.Errorf("failed to write response: %v", err)
 		}
 	}))
 	defer srv.Close()
 
 	_, err := themoviedb.NewClient(
-		context.Background(),
+		t.Context(),
 		"fake-key",
 		themoviedb.WithClient(srv.Client()),
 		themoviedb.WithBaseURL(srv.URL),
 		themoviedb.WithAPIConfiguration(themoviedb.APIConfiguration{}),
 	)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	if configCalled == true {
 		t.Errorf("configuration endpoint called, expected not to")

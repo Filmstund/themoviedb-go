@@ -1,7 +1,6 @@
 package themoviedb_test
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -12,27 +11,27 @@ import (
 const externalIDsResp = `{"id":634649,"imdb_id":"tt10872600","facebook_id":"SpiderManMovie","instagram_id":"spidermanmovie","twitter_id":"spidermanmovie"}`
 
 func TestClient_MovieExternalIDs(t *testing.T) {
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		if _, err := w.Write([]byte(externalIDsResp)); err != nil {
-			t.Fatalf("failed to write response: %b", err)
+			t.Errorf("failed to write response: %v", err)
 		}
 	}))
 	defer srv.Close()
 
 	client, err := themoviedb.NewClient(
-		context.Background(),
+		t.Context(),
 		"fake-api-key",
 		themoviedb.WithAPIConfiguration(themoviedb.APIConfiguration{}),
 		themoviedb.WithBaseURL(srv.URL),
 		themoviedb.WithClient(srv.Client()),
 	)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 
-	exts, err := client.MovieExternalIDs(context.Background(), 634649)
+	exts, err := client.MovieExternalIDs(t.Context(), 634649)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 
 	if exts.ID != 634649 {

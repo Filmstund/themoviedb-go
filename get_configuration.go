@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// APIConfiguration describes the system-wide API configuration, such as image base URLs.
 type APIConfiguration struct {
 	Images struct {
 		BaseURL       string   `json:"base_url"`

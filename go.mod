@@ -1,3 +1,3 @@
 module github.com/filmstund/themoviedb-go
 
-go 1.17
+go 1.27

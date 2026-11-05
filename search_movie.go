@@ -7,13 +7,14 @@ import (
 	"strconv"
 )
 
+// MovieSearchResult is a page of movie search results.
 type MovieSearchResult struct {
 	Page    int `json:"page"`
 	Results []struct {
 		ID               int64   `json:"id"`
 		Adult            bool    `json:"adult"`
 		BackdropPath     *string `json:"backdrop_path"`
-		GenreIds         []int   `json:"genre_ids"`
+		GenreIds         []int   `json:"genre_ids"` //nolint:revive // renaming would break the public API
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
 		Overview         string  `json:"overview"`
@@ -29,6 +30,7 @@ type MovieSearchResult struct {
 	TotalResults int `json:"total_results"`
 }
 
+// SearchMovie searches for movies by title and release year.
 func (client *Client) SearchMovie(ctx context.Context, query string, year int) (*MovieSearchResult, error) {
 	params := url.Values{}
 	params.Set("api_key", client.apiKey)

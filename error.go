@@ -6,20 +6,23 @@ import (
 	"io"
 )
 
+// APIError is returned when the API responds with a non-OK status.
 type APIError struct {
 	error   string
 	errResp *ErrorResponse
 }
 
+// Error implements the error interface.
 func (apiErr *APIError) Error() string {
 	return apiErr.error
 }
 
+// Response returns the decoded error response from the API.
 func (apiErr *APIError) Response() *ErrorResponse {
 	return apiErr.errResp
 }
 
-func newAPIError(body io.Reader, format string, a ...interface{}) *APIError {
+func newAPIError(body io.Reader, format string, a ...any) *APIError {
 	decoder := json.NewDecoder(body)
 	errResp := new(ErrorResponse)
 	msg := fmt.Sprintf(format, a...)

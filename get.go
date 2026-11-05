@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func (client *Client) get(ctx context.Context, url string, entity interface{}) error {
+func (client *Client) get(ctx context.Context, url string, entity any) error {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return fmt.Errorf("get: %w", err)

@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// MovieExternalIDs holds the IDs of a movie on external sites, such as IMDb.
 type MovieExternalIDs struct {
 	ID          int64   `json:"id"`
 	ImdbID      *string `json:"imdb_id"`
@@ -13,6 +14,7 @@ type MovieExternalIDs struct {
 	TwitterID   *string `json:"twitter_id"`
 }
 
+// MovieExternalIDs fetches the external IDs for a movie.
 func (client *Client) MovieExternalIDs(ctx context.Context, movieID int64) (*MovieExternalIDs, error) {
 	url := fmt.Sprintf("%s/movie/%d/external_ids?api_key=%s", client.baseURL, movieID, client.apiKey)
 	external := new(MovieExternalIDs)
