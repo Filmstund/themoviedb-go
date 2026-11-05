@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// MovieDetails holds the primary information about a movie.
 type MovieDetails struct {
 	Adult               bool   `json:"adult"`
 	BackdropPath        string `json:"backdrop_path"`
@@ -53,6 +54,7 @@ type MovieDetails struct {
 	VoteCount   int     `json:"vote_count"`
 }
 
+// MovieDetails fetches the primary information about a movie.
 func (client *Client) MovieDetails(ctx context.Context, movieID int64) (*MovieDetails, error) {
 	url := fmt.Sprintf("%s/movie/%d?api_key=%s", client.baseURL, movieID, client.apiKey)
 	details := new(MovieDetails)

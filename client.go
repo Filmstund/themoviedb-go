@@ -9,8 +9,10 @@ import (
 
 const theMovieDBAPIBaseURL = "https://api.themoviedb.org/3"
 
+// Option configures a Client.
 type Option func(*Client) *Client
 
+// Client is a The Movie DB API client.
 type Client struct {
 	baseURL   string
 	http      *http.Client

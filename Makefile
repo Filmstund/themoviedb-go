@@ -1,5 +1,4 @@
 PROJECT_NAME := themoviedb-go
-GOFMT_FILES = $(shell go list -f '{{.Dir}}' ./... | grep -v '/pb')
 
 all: \
 	mod-tidy \
@@ -12,7 +11,7 @@ all: \
 
 lint:
 	$(info [$@] linting $(PROJECT_NAME)...)
-	@golangci-lint run --config .golangci.yaml
+	@golangci-lint run
 .PHONY: lint
 
 verify-nodiff:
@@ -23,7 +22,7 @@ verify-nodiff:
 # Format all files
 fmt:
 	$(info [$@] formatting all Go files...)
-	@gofumpt -w $(GOFMT_FILES)
+	@golangci-lint fmt
 .PHONY: fmt
 
 mod-tidy:
